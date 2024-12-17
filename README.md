@@ -67,3 +67,21 @@ __global__ void histogram(auto traverser, auto in, auto out) {
     });
 }
 ```
+
+## **Resultados**
+
+   - Evaluación con Polybench-C y Polybench-GPU.
+   - Rendimiento comparable a implementaciones manuales en C++ y CUDA.
+   - Sin sobrecarga significativa al aplicar transformaciones y paralelización.
+
+## **Participantes**
+
+- **Santiago Vilca** - [santiagovl0308@gmail.com](mailto:santiagovl0308@gmail.com)  
+- **Freddy Humpiri** - [fhumpiri@unsa.edu.pe](mailto:fhumpiri@unsa.edu.pe)  
+- **Henry Yanqui** - [hyanquiv@unsa.edu.pe](mailto:hyanquiv@unsa.edu.pe)  
+- **Manuel Nifla** - [mnifla@unsa.edu.pe](mailto:mnifla@unsa.edu.pe)
+
+---
+
+## **Referencias**
+- **Artículo**: "Abstractions for C++ code optimizations in parallel high-performance applications".
