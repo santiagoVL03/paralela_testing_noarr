@@ -23,4 +23,47 @@ Este repositorio presenta una **abstracción** para el recorrido optimizado de e
    - Implementado en **C++ estándar** usando meta-programación de templates.
    - Compilable con GCC y NVCC (para CUDA).
 
+---
 
+## **Ejemplos de Uso**
+
+### **1. Definición de Matrices con Noarr**
+```cpp
+auto matrix = scalar<float>() ^ vector<'j'>() ^ vector<'i'>();
+```
+### **2. Multiplicación de Matrices**
+```cpp
+noarr::traverser(a, b, c).for_each([=](auto state) {
+    c[state] += a[state] * b[state];
+});
+
+```
+
+### **3. Transformación del Orden de Recorrido**
+```cpp
+auto blocks = noarr::strip_mine<'i', 'I', 'i'>(noarr::lit<16>) ^
+              noarr::strip_mine<'k', 'K', 'k'>(noarr::lit<16>);
+noarr::traverser(a, b, c).order(blocks).for_each([=](auto state) {
+    c[state] += a[state] * b[state];
+});
+```
+
+### **4. Ejecución Paralela con TBB**
+```cpp
+noarr::tbb_reduce_bag(
+    noarr::traverser(in),
+    [](auto state, auto &out) { out[state] = 0; },
+    [](auto state, auto &out) { out[state] += 1; },
+    out
+);
+```
+
+### **5. Ejecución en GPU con CUDA**
+
+```cpp
+__global__ void histogram(auto traverser, auto in, auto out) {
+    traverser.for_each([=](auto state) {
+        atomicAdd(&out[noarr::idx<'v'>(in[state])], 1);
+    });
+}
+```
